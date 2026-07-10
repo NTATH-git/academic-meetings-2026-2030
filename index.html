@@ -2,169 +2,359 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070b14">
+<script>(function(){var t;try{t=localStorage.getItem('amTheme');}catch(e){}
+if(t!=='light'&&t!=='dark'){t='dark';}
+document.documentElement.setAttribute('data-theme',t);})();</script>
 <title>血管・心臓外科関連 主要学会スケジュール</title>
 <style>
+  /* ===== テーマ変数 (ダーク基調 / data-theme="light" で切替) ===== */
   :root {
-    --primary: #003C71;
-    --accent: #0070C0;
-    --bg: #f5f7fa;
-    --border: #d1d9e6;
+    --bg: #070b14;
+    --panel: #0e1524;
+    --panel-2: #131c30;
+    --line: rgba(148,163,184,.14);
+    --text: #e7edf8;
+    --muted: #9aa9c0;
+    --faint: #64748b;
+    --acc1: #38bdf8;
+    --acc2: #818cf8;
+    --grad: linear-gradient(115deg, #38bdf8, #818cf8 55%, #c084fc);
+    --jp: #3b82f6;  --int: #f43f5e;  --reg: #10b981;
+    --thead: rgba(148,163,184,.07);
+    --hover: rgba(56,189,248,.07);
+    --dl: #fbbf24;  --dl-hot: #fb7185;
+    --shadow: 0 14px 40px rgba(2,6,23,.45);
+    --tip-bg: rgba(13,20,36,.97);
+  }
+  :root[data-theme="light"] {
+    --bg: #eef2f9;
+    --panel: #ffffff;
+    --panel-2: #f6f9ff;
+    --line: #dde5f1;
+    --text: #182238;
+    --muted: #5c6b85;
+    --faint: #94a1b7;
+    --thead: #eef3fa;
+    --hover: #f2f8ff;
+    --dl: #b45309;  --dl-hot: #e11d48;
+    --shadow: 0 10px 30px rgba(23,42,79,.10);
+    --tip-bg: #ffffff;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
     margin: 0;
-    background: var(--bg);
-    color: #222;
+    background: radial-gradient(1100px 480px at 82% -120px, rgba(129,140,248,.09), transparent 70%) fixed, var(--bg);
+    color: var(--text);
     line-height: 1.6;
+    transition: background .3s, color .3s;
   }
+  /* ===== ヒーローヘッダー (オーロラ・アニメーション) ===== */
   header {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
-    padding: 2rem 1.5rem;
-    text-align: center;
+    position: relative; overflow: hidden; isolation: isolate;
+    background: #070b14; color: #f2f6ff;
+    padding: 3.2rem 1.5rem 4.6rem; text-align: center;
   }
-  header h1 { margin: 0; font-size: 1.8rem; }
-  header p { margin: 0.3rem 0 0; opacity: 0.9; font-size: 0.95rem; }
-  main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+  header::before {
+    content: ""; position: absolute; inset: -45%; z-index: -2;
+    background:
+      radial-gradient(38% 45% at 22% 30%, rgba(56,189,248,.52), transparent 62%),
+      radial-gradient(42% 52% at 78% 24%, rgba(129,140,248,.46), transparent 65%),
+      radial-gradient(46% 55% at 55% 85%, rgba(192,132,252,.34), transparent 68%);
+    filter: blur(36px);
+    animation: aurora 16s ease-in-out infinite alternate;
+  }
+  header::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(75% 95% at 50% 8%, #000 25%, transparent 78%);
+    mask-image: radial-gradient(75% 95% at 50% 8%, #000 25%, transparent 78%);
+  }
+  @keyframes aurora {
+    0%   { transform: translate3d(-6%,-9%,0) rotate(0deg)  scale(1); }
+    100% { transform: translate3d( 5%, 7%,0) rotate(28deg) scale(1.18); }
+  }
+  .hero-kicker {
+    display: inline-block; font-size: .7rem; font-weight: 700;
+    letter-spacing: .3em; color: #9fc3ff;
+    border: 1px solid rgba(159,195,255,.35); border-radius: 999px;
+    padding: .32rem .95rem; background: rgba(56,189,248,.08);
+  }
+  header h1 {
+    margin: .95rem auto .4rem; line-height: 1.28;
+    font-size: clamp(1.65rem, 4.2vw, 2.7rem); font-weight: 800; letter-spacing: .01em;
+    background: linear-gradient(115deg, #ffffff, #bfe3ff 45%, #c7c9ff 75%, #e6d4ff);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  header p { margin: 0; color: #aebcd8; font-size: .95rem; letter-spacing: .06em; }
+  .hero-stats { display: flex; gap: 2rem; justify-content: center; margin-top: 1.35rem; flex-wrap: wrap; }
+  .hero-stats .stat { display: flex; flex-direction: column; min-width: 72px; }
+  .hero-stats b {
+    font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-stats .lab { font-size: .68rem; color: #8fa2c4; letter-spacing: .22em; }
+  /* ===== スティッキー年度ナビ ===== */
+  .topnav {
+    position: sticky; top: 0; z-index: 120;
+    display: flex; align-items: center; gap: .35rem;
+    padding: .5rem clamp(.8rem, 3vw, 1.5rem);
+    background: rgba(7,11,20,.74);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(148,163,184,.16);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav a {
+    flex: none; color: #a7b6d3; text-decoration: none;
+    font-size: .85rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    padding: .32rem .85rem; border-radius: 999px;
+    transition: color .18s, background .18s;
+  }
+  .topnav a:hover { color: #fff; background: rgba(148,163,184,.14); text-decoration: none; }
+  .topnav a.active { color: #fff; background: var(--grad); box-shadow: 0 4px 14px rgba(99,102,241,.35); }
+  .nav-spacer { margin-left: auto; }
+  .theme-toggle {
+    flex: none; cursor: pointer; font-size: .95rem; line-height: 1;
+    color: #cdd9ee; background: rgba(148,163,184,.12);
+    border: 1px solid rgba(148,163,184,.25); border-radius: 999px;
+    width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center;
+    transition: transform .2s, background .2s;
+  }
+  .theme-toggle:hover { transform: rotate(22deg) scale(1.08); background: rgba(148,163,184,.24); }
+  /* ===== 直近の学会カード (ヘッダーに重ねる) ===== */
+  .nextup-wrap { max-width: 1200px; margin: 1.25rem auto 0; padding: 0 1.5rem; position: relative; z-index: 5; }
+  .nextup-title { font-size: .7rem; font-weight: 800; letter-spacing: .3em; color: #8fa2c4; margin: 0 0 .5rem .2rem; }
+  .nextup { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: .8rem; }
+  .nu-card {
+    appearance: none; text-align: left; cursor: pointer; font-family: inherit; color: var(--text);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: .85rem 1rem .9rem; display: flex; flex-direction: column; gap: .22rem;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .nu-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+  .nu-jp::before  { background: var(--jp); }
+  .nu-int::before { background: var(--int); }
+  .nu-reg::before { background: var(--reg); }
+  .nu-card:hover { transform: translateY(-3px); border-color: rgba(56,189,248,.55); }
+  .nu-days {
+    font-size: 1.18rem; font-weight: 800; letter-spacing: .02em; font-variant-numeric: tabular-nums;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nu-name { font-weight: 700; font-size: .92rem; line-height: 1.35; }
+  .nu-meta { color: var(--muted); font-size: .78rem; }
+  /* ===== 本体 ===== */
+  main { max-width: 1200px; margin: 0 auto; padding: 1.2rem 1.5rem 2rem; }
   section.year {
-    background: white;
-    border-radius: 8px;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    position: relative; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+    padding: 1.3rem 1.5rem 1.4rem; margin-bottom: 1.4rem;
+    box-shadow: var(--shadow); scroll-margin-top: 84px;
   }
+  section.year::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad); opacity: .75; }
   section.year h2 {
-    margin: 0 0 1rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 3px solid var(--accent);
-    color: var(--primary);
-    font-size: 1.5rem;
+    display: flex; align-items: center; gap: .7rem; margin: 0 0 1rem;
+    font-size: 1.65rem; font-weight: 800; letter-spacing: .02em; color: var(--text);
+    font-variant-numeric: tabular-nums;
   }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
+  section.year h2::before { content: ""; width: 10px; height: 26px; border-radius: 3px; background: var(--grad); }
+  section.year h2 .ycount {
+    font-size: .72rem; font-weight: 700; color: var(--muted);
+    background: var(--thead); border: 1px solid var(--line);
+    padding: .16rem .68rem; border-radius: 999px; letter-spacing: .08em;
   }
-  th, td {
-    text-align: left;
-    padding: 0.6rem 0.75rem;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-  th {
-    background: #eef3f9;
-    color: var(--primary);
-    font-weight: 600;
-    white-space: nowrap;
-  }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .93rem; min-width: 780px; }
+  th, td { text-align: left; padding: .6rem .75rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--thead); color: var(--muted); font-weight: 700; font-size: .76rem; letter-spacing: .1em; white-space: nowrap; }
+  th:first-child { border-radius: 8px 0 0 8px; }
+  th:last-child  { border-radius: 0 8px 8px 0; }
   /* カテゴリ別の左側ボーダー色で国内/国際/地方会を区別 */
-  tr.row-jp  td:first-child { border-left: 4px solid #1a4b8c; }
-  tr.row-int td:first-child { border-left: 4px solid #c0392b; }
-  tr.row-reg td:first-child { border-left: 4px solid #2e7d32; }
-  tr:hover { background: #fafbfd; }
-  tr.row-past { opacity: 0.45; }
-  tr.row-past:hover { opacity: 1; }
+  tr.row-jp  td:first-child { border-left: 3px solid var(--jp); }
+  tr.row-int td:first-child { border-left: 3px solid var(--int); }
+  tr.row-reg td:first-child { border-left: 3px solid var(--reg); }
+  tbody tr { transition: background .16s; }
+  tbody tr:hover { background: var(--hover); }
+  tr.row-past { opacity: .38; filter: saturate(.4); transition: opacity .2s, filter .2s; }
+  tr.row-past:hover { opacity: 1; filter: none; }
+  tr.flash { animation: flashRow 1.8s ease-out; }
+  @keyframes flashRow { 0% { background: rgba(56,189,248,.3); } 100% { background: transparent; } }
   .chip {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    margin-right: 4px;
-    color: white;
+    display: inline-block; padding: 2px 9px; border-radius: 999px;
+    font-size: .74rem; font-weight: 700; margin-right: 6px; color: #fff; letter-spacing: .04em;
   }
-  .chip-jp  { background: #1a4b8c; }    /* 濃い青 */
-  .chip-int { background: #c0392b; }    /* 濃い赤 */
-  .chip-reg { background: #2e7d32; }    /* 濃い緑 */
-  .legend { display: flex; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.85rem; flex-wrap: wrap; }
-  .legend-item { padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; }
+  .chip-jp  { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .chip-int { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+  .chip-reg { background: linear-gradient(135deg, #059669, #10b981); }
   /* 区分フィルタ(クリックで表示/非表示) */
-  .filterbar { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; font-size: 0.85rem; }
-  .filter-label { color: #555; font-weight: 600; }
-  .filter-btn { cursor: pointer; font-family: inherit; font-size: 0.85rem; color: #333; background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 3px; transition: opacity 0.15s; }
-  .filter-btn.active { box-shadow: inset 0 0 0 2px var(--accent); border-color: var(--accent); }
-  .filter-btn:not(.active) { opacity: 0.45; background: #f0f0f0; text-decoration: line-through; }
-  .filter-reset { cursor: pointer; font-family: inherit; font-size: 0.82rem; color: #fff; background: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 4px 10px; }
-  .filter-reset:hover { background: var(--primary); border-color: var(--primary); }
-  .filter-count { color: #777; margin-left: auto; font-variant-numeric: tabular-nums; }
-  .legend-jp  { border-left: 4px solid #1a4b8c; }
-  .legend-int { border-left: 4px solid #c0392b; }
-  .legend-reg { border-left: 4px solid #2e7d32; }
-  .month { color: #555; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .venue { color: #444; }
-  .status-tbd { color: #999; font-style: italic; }
-  .note { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
+  .filterbar { display: flex; gap: .5rem; align-items: center; margin: 1.1rem 0; flex-wrap: wrap; font-size: .85rem; }
+  .filter-label { color: var(--muted); font-weight: 700; letter-spacing: .05em; }
+  .filter-btn {
+    cursor: pointer; font-family: inherit; font-size: .84rem; color: var(--text);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+    padding: .32rem .85rem; display: inline-flex; align-items: center; gap: 5px;
+    transition: all .18s;
+  }
+  .filter-btn:hover { transform: translateY(-1px); }
+  .filter-btn.active { border-color: transparent; box-shadow: inset 0 0 0 1.5px var(--acc1), 0 4px 14px rgba(56,189,248,.15); }
+  .filter-btn:not(.active) { opacity: .42; filter: grayscale(.6); text-decoration: line-through; }
+  .filter-reset {
+    cursor: pointer; font-family: inherit; font-size: .82rem; font-weight: 700; color: #fff;
+    background: var(--grad); border: none; border-radius: 999px; padding: .38rem .95rem;
+    box-shadow: 0 4px 14px rgba(99,102,241,.3); transition: transform .18s, box-shadow .18s;
+  }
+  .filter-reset:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,.45); }
+  .filter-count { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+  .month { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .venue { color: var(--text); opacity: .92; }
+  .status-tbd { color: var(--faint); font-style: italic; }
+  .note { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
   .deadline { white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .dl-open { font-weight: 700; color: #c0392b; }
-  .dl-past { color: #999; text-decoration: line-through; }
-  .dl-none { color: #ccc; }
+  .dl-open { font-weight: 700; color: var(--dl); }
+  .dl-past { color: var(--faint); text-decoration: line-through; }
+  .dl-none { color: var(--faint); opacity: .5; }
+  .dl-badge {
+    display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px;
+    font-size: .7rem; font-weight: 800; vertical-align: 1px;
+    background: rgba(251,191,36,.14); color: var(--dl); border: 1px solid rgba(251,191,36,.4);
+  }
+  .dl-badge.hot { background: var(--dl-hot); color: #fff; border-color: transparent; animation: pulseBadge 1.5s ease-out infinite; }
+  @keyframes pulseBadge {
+    0%   { box-shadow: 0 0 0 0 rgba(244,63,94,.5); }
+    70%  { box-shadow: 0 0 0 7px rgba(244,63,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(244,63,94,0); }
+  }
   .soc-name { font-weight: 600; }
   /* 学会名 = 公式サイトへのリンク */
-  a.soc-link { color: var(--primary); text-decoration: none; }
-  a.soc-link:hover { color: var(--accent); text-decoration: none; }
+  a.soc-link { color: var(--text); text-decoration: none; }
+  a.soc-link:hover { color: var(--acc1); text-decoration: none; }
   /* 学会名ホバーで年度横断スケジュールをポップアップ表示 */
-  .soc-wrap { position: relative; border-bottom: 1px dotted #9aa7b8; cursor: pointer; }
+  .soc-wrap { position: relative; border-bottom: 1px dotted var(--faint); cursor: pointer; }
   .soc-tip {
-    display: none; position: absolute; top: 1.6em; left: 0; z-index: 60;
-    background: #fff; color: #222; border: 1px solid var(--accent);
-    border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-    padding: 0.5rem 0.6rem; width: max-content; max-width: 520px;
-    font-size: 0.8rem; line-height: 1.4; font-weight: 400; white-space: normal;
+    display: none; position: absolute; top: 1.7em; left: 0; z-index: 80;
+    background: var(--tip-bg); color: var(--text);
+    border: 1px solid rgba(129,140,248,.45); border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(2,6,23,.55);
+    padding: .55rem .7rem; width: max-content; max-width: 540px;
+    font-size: .8rem; line-height: 1.45; font-weight: 400; white-space: normal;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   }
-  .soc-wrap:hover .soc-tip { display: block; }
+  .soc-wrap:hover .soc-tip { display: block; animation: tipIn .18s ease-out; }
+  @keyframes tipIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
   .soc-tip-h {
-    display: block; font-weight: 700; color: var(--primary);
-    border-bottom: 1px solid var(--border); padding-bottom: 3px; margin-bottom: 4px;
+    display: block; font-weight: 700; color: var(--acc1);
+    border-bottom: 1px solid var(--line); padding-bottom: 3px; margin-bottom: 4px;
   }
   .tip-row {
     display: grid; grid-template-columns: 2.8em auto auto 1fr;
     column-gap: 10px; padding: 1px 0; align-items: baseline;
   }
-  .tip-row.cur { background: #fff4d6; border-radius: 4px; font-weight: 700; }
-  .tip-y { color: #555; font-variant-numeric: tabular-nums; }
-  .tip-e { color: #777; font-size: 0.74rem; white-space: nowrap; }
-  .tip-d { color: #222; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .tip-v { color: #444; }
-  .tip-v.tbd { color: #999; font-style: italic; }
-  footer { text-align: center; color: #777; font-size: 0.85rem; padding: 2rem 1rem; }
-  a { color: var(--accent); text-decoration: none; }
+  .tip-row.cur { background: rgba(251,191,36,.15); border-radius: 6px; font-weight: 700; }
+  .tip-y { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .tip-e { color: var(--faint); font-size: .74rem; white-space: nowrap; }
+  .tip-d { color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tip-v { color: var(--muted); }
+  .tip-v.tbd { color: var(--faint); font-style: italic; }
+  /* References */
+  section.year ul { margin: .2rem 0 0; padding-left: 1.1rem; columns: 2; column-gap: 2.6rem; }
+  section.year li { margin: .18rem 0; break-inside: avoid; }
+  @media (max-width: 700px) { section.year ul { columns: 1; } }
+  footer { text-align: center; color: var(--faint); font-size: .83rem; padding: 2.2rem 1rem 4.5rem; }
+  .foot-grad { width: 64px; height: 3px; border-radius: 2px; background: var(--grad); margin: 0 auto .9rem; opacity: .8; }
+  a { color: var(--acc1); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  /* トップへ戻る */
+  #toTop {
+    position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 150;
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--panel); color: var(--text);
+    cursor: pointer; font-size: 1.05rem; box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(12px); pointer-events: none;
+    transition: opacity .25s, transform .25s, background .2s;
+  }
+  #toTop.show { opacity: 1; transform: none; pointer-events: auto; }
+  #toTop:hover { background: var(--panel-2); }
+  /* スクロール連動フェードイン */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
   @media print {
     @page { size: A4; margin: 10mm; }
+    :root, :root[data-theme="dark"], :root[data-theme="light"] {
+      --bg: #fff; --panel: #fff; --panel-2: #fff; --text: #111; --muted: #555; --faint: #888;
+      --line: #bbb; --thead: #eef3f9; --hover: transparent; --shadow: none; --tip-bg: #fff;
+      --dl: #b45309; --dl-hot: #c0392b;
+    }
     html, body { background: white !important; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .legend, .filterbar { display: none; }
-    header { background: var(--primary); padding: 0.8rem; }
-    header h1 { font-size: 1.2rem; }
+    .topnav, .nextup-wrap, .filterbar, #toTop, .dl-badge, .hero-stats, .hero-kicker { display: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    header { background: #003C71; padding: 0.8rem; }
+    header::before, header::after { display: none; }
+    header h1 { font-size: 1.2rem; margin: 0; background: none; -webkit-text-fill-color: #fff; color: #fff; }
     header p { font-size: 0.8rem; }
     main { padding: 0.5rem; max-width: 100%; }
     section.year {
       box-shadow: none;
       border: 1px solid #bbb;
+      border-radius: 4px;
       padding: 0.5rem 0.8rem;
       margin-bottom: 0.6rem;
       page-break-inside: auto;
     }
-    section.year h2 { font-size: 1.1rem; margin: 0 0 0.4rem; padding-bottom: 0.2rem; }
-    table { font-size: 0.72rem; }
+    section.year::before, section.year h2::before { display: none; }
+    section.year h2 { font-size: 1.1rem; margin: 0 0 0.4rem; }
+    section.year h2 .ycount { display: none; }
+    .table-scroll { overflow: visible; }
+    table { font-size: 0.72rem; min-width: 0; }
     th, td { padding: 0.25rem 0.4rem; }
     thead { display: table-header-group; }
     tr { page-break-inside: avoid; }
-    .chip { font-size: 0.65rem; padding: 1px 5px; }
+    tr.row-past { filter: none; }
+    .chip { font-size: 0.65rem; padding: 1px 5px; color: #fff; }
+    .chip-jp { background: #1a4b8c; } .chip-int { background: #c0392b; } .chip-reg { background: #2e7d32; }
     .note { font-size: 0.7rem; }
     .soc-wrap { border-bottom: none; cursor: auto; }
     .soc-tip { display: none !important; }
+    a.soc-link { color: #111; }
+    section.year ul { columns: 2; }
     footer { padding: 0.5rem; font-size: 0.7rem; }
   }
 </style>
 </head>
 <body>
 <header>
+  <span class="hero-kicker">ACADEMIC MEETINGS 2026–2030</span>
   <h1>血管・心臓外科関連 主要学会スケジュール</h1>
   <p>2026 - 2030 / Japanese &amp; International Societies</p>
+  <div class="hero-stats">
+    <span class="stat"><b>129</b><span class="lab">MEETINGS</span></span>
+    <span class="stat"><b>25</b><span class="lab">SOCIETIES</span></span>
+    <span class="stat"><b>5</b><span class="lab">YEARS</span></span>
+  </div>
 </header>
+
+<nav class="topnav" id="topnav">
+  <a href="#y2026">2026</a><a href="#y2027">2027</a><a href="#y2028">2028</a><a href="#y2029">2029</a><a href="#y2030">2030</a><a href="#refs">参考</a>
+  <span class="nav-spacer"></span>
+  <button type="button" class="theme-toggle" id="themeToggle" title="ライト/ダーク切替" aria-label="テーマ切替">☀</button>
+</nav>
+
+<div class="nextup-wrap" id="nextupWrap">
+  <p class="nextup-title">UPCOMING ─ 直近の学会</p>
+  <div class="nextup" id="nextup"></div>
+</div>
 
 <main>
   <div class="filterbar">
@@ -177,11 +367,12 @@
   </div>
 
   <section class="year" id="y2026">
-    <h2>2026</h2>
+    <h2>2026<span class="ycount">27件</span></h2>
+    <div class="table-scroll">
     <table>
       <thead><tr><th>日程</th><th>学会</th><th>回次</th><th>開催地</th><th>演題締切</th><th>備考</th></tr></thead>
       <tbody>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-01-29">
           <td class="month">1/29(木) – 2/1(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.sts.org/education/future-annual-meetings" target="_blank" rel="noopener">STS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">62nd</span><span class="tip-d">1/29(木) – 2/1(日)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">63rd</span><span class="tip-d">1/28(木) – 31(日)</span><span class="tip-v">San Diego, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">64th</span><span class="tip-d">1/28(金) – 30(日)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">65th</span><span class="tip-d">1/26(金) – 28(日)</span><span class="tip-v">Phoenix, AZ, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">66th</span><span class="tip-d">1月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>62nd</td>
@@ -189,7 +380,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Society of Thoracic Surgeons</td>
         </tr>
-        <tr class="row-jp row-past">
+        <tr class="row-jp row-past" data-start="2026-02-21">
           <td class="month">2/21(土) – 23(月)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jscvs.or.jp/meeting/" target="_blank" rel="noopener">日本心臓血管外科学会 (JSCVS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本心臓血管外科学会 (JSCVS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第56回</span><span class="tip-d">2/21(土) – 23(月)</span><span class="tip-v">幕張メッセ(千葉)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第57回</span><span class="tip-d">3/4(木) – 6(土)</span><span class="tip-v">富山</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第58回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第59回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第60回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第56回</td>
@@ -197,7 +388,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:松宮護郎(千葉大)</td>
         </tr>
-        <tr class="row-jp row-past">
+        <tr class="row-jp row-past" data-start="2026-03-20">
           <td class="month">3/20(金) – 22(日)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.j-circ.or.jp/annual/" target="_blank" rel="noopener">日本循環器学会 (JCS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本循環器学会 (JCS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第90回</span><span class="tip-d">3/20(金) – 22(日)</span><span class="tip-v">福岡国際会議場・福岡サンパレス・マリンメッセ福岡</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第91回</span><span class="tip-d">3/26(金) – 28(日)</span><span class="tip-v">パシフィコ横浜(横浜)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第92回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第93回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第94回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第90回</td>
@@ -205,7 +396,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:野出孝一(佐賀大学長)</td>
         </tr>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-03-28">
           <td class="month">3/28(土) – 30(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://accscientificsession.acc.org/Information-Pages/future-meetings" target="_blank" rel="noopener">ACC Scientific Session</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ACC Scientific Session｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">ACC.26</span><span class="tip-d">3/28(土) – 30(月)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">ACC.27</span><span class="tip-d">4/10(土) – 12(月)</span><span class="tip-v">Houston, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">ACC.28</span><span class="tip-d">4/1(土) – 3(月)</span><span class="tip-v">Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">ACC.29</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">ACC.30</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>ACC.26</td>
@@ -213,7 +404,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American College of Cardiology</td>
         </tr>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-04-16">
           <td class="month">4/16(木) – 19(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://ascvts.org/annual-meeting.html" target="_blank" rel="noopener">ASCVTS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ASCVTS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">34th</span><span class="tip-d">4/16(木) – 19(日)</span><span class="tip-v">Antalya, Turkey</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">35th</span><span class="tip-d">5/19(水) – 22(土)</span><span class="tip-v">横浜 / Yokohama, Japan</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">36th</span><span class="tip-d">春(予定)</span><span class="tip-v">Bangkok, Thailand</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">37th</span><span class="tip-d">春(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">38th</span><span class="tip-d">春(予定)</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>34th</td>
@@ -221,7 +412,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Asian Society for Cardiovascular and Thoracic Surgery / President: Sertac M. Cicek</td>
         </tr>
-        <tr class="row-jp row-past">
+        <tr class="row-jp row-past" data-start="2026-04-23">
           <td class="month">4/23(木) – 25(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jp.jssoc.or.jp/modules/meeting/index.php?content_id=3" target="_blank" rel="noopener">日本外科学会 (JSS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本外科学会 (JSS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第126回</span><span class="tip-d">4/23(木) – 25(土)</span><span class="tip-v">京王プラザホテル札幌 他(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第127回</span><span class="tip-d">4/8(木) – 10(土)</span><span class="tip-v">東京国際フォーラム 他(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第128回</span><span class="tip-d">4/13(木) – 15(土)</span><span class="tip-v">国立京都国際会館 他(京都)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第129回</span><span class="tip-d">4/12(木) – 14(土)</span><span class="tip-v">大阪国際会議場 他(大阪)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第130回</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第126回</td>
@@ -229,7 +420,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会頭:平野聡(北大消化器外科II)</td>
         </tr>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-05-02">
           <td class="month">5/2(土) – 5(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.aats.org/future-annual-meetings" target="_blank" rel="noopener">AATS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">AATS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">106th</span><span class="tip-d">5/2(土) – 5(火)</span><span class="tip-v">McCormick Place Lakeside Center, Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">107th</span><span class="tip-d">5/1(土) – 4(火)</span><span class="tip-v">Los Angeles Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">108th</span><span class="tip-d">4/29(土) – 5/2(火)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">109th</span><span class="tip-d">5/5(土) – 8(火)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">110th</span><span class="tip-d">4/27(土) – 30(火)</span><span class="tip-v">Toronto Convention Centre, Toronto, ON, Canada</span></span></span></span></td>
           <td>106th</td>
@@ -237,7 +428,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American Association for Thoracic Surgery</td>
         </tr>
-        <tr class="row-jp row-past">
+        <tr class="row-jp row-past" data-start="2026-05-27">
           <td class="month">5/27(水) – 29(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jsvs.org/ja/event/" target="_blank" rel="noopener">日本血管外科学会 (JSVS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本血管外科学会 (JSVS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第54回</span><span class="tip-d">5/27(水) – 29(金)</span><span class="tip-v">グランフロント大阪 北館 ナレッジキャピタル(大阪)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第55回</span><span class="tip-d">5/26(水) – 28(金)</span><span class="tip-v">ホテルオークラ東京</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第56回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第57回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第58回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第54回</td>
@@ -245,7 +436,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:松田均/テーマ「最前線で最善を尽くす」</td>
         </tr>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-06-10">
           <td class="month">6/10(水) – 13(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://vascular.org/vascular-specialists/education-and-meetings/meetings/future-vam-dates" target="_blank" rel="noopener">SVS Vascular Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">SVS Vascular Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">VAM 2026</span><span class="tip-d">6/10(水) – 13(土)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">VAM 2027</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">VAM 2028</span><span class="tip-d">5/31(水) – 6/3(土)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">VAM 2029</span><span class="tip-d">6/13(水) – 16(土)</span><span class="tip-v">Kentucky International Convention Center, Louisville, KY, USA</span></span></span></span></td>
           <td>VAM 2026</td>
@@ -253,7 +444,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Society for Vascular Surgery</td>
         </tr>
-        <tr class="row-reg row-past">
+        <tr class="row-reg row-past" data-start="2026-06-13">
           <td class="month">6/13(土)</td>
           <td><span class="chip chip-reg">地方</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.ringe.jp/about/chapter" target="_blank" rel="noopener">日本臨床外科学会 北海道支部総会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本臨床外科学会 北海道支部総会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第129回</span><span class="tip-d">6/13(土)</span><span class="tip-v">アートホテル旭川(旭川)</span></span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第130回</span><span class="tip-d">9/12(土) – 13(日)</span><span class="tip-v">ホテルライフォート札幌(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第131回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第132回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第133回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第134回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第135回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第136回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第137回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第138回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span></span></span></td>
           <td>第129回</td>
@@ -261,7 +452,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:新居利英(深川市立病院 院長)</td>
         </tr>
-        <tr class="row-int row-past">
+        <tr class="row-int row-past" data-start="2026-06-17">
           <td class="month">6/17(水) – 20(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://asaio.org/Conference/Archive/" target="_blank" rel="noopener">ASAIO Annual Conference</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ASAIO Annual Conference｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">72nd</span><span class="tip-d">6/17(水) – 20(土)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">73rd</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">The Royal Sonesta, Houston, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">74th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">75th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">76th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>72nd</td>
@@ -269,7 +460,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American Society for Artificial Internal Organs</td>
         </tr>
-        <tr class="row-reg row-past">
+        <tr class="row-reg row-past" data-start="2026-06-27">
           <td class="month">6/27(土)</td>
           <td><span class="chip chip-reg">地方</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.j-circ.or.jp/annual_area/hokkaido/" target="_blank" rel="noopener">日本循環器学会 北海道地方会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本循環器学会 北海道地方会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第135回</span><span class="tip-d">6/27(土)</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第136回</span><span class="tip-d">11月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第137回</span><span class="tip-d">6月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第138回</span><span class="tip-d">11月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第139回</span><span class="tip-d">6月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第140回</span><span class="tip-d">11月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第141回</span><span class="tip-d">6月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第142回</span><span class="tip-d">11月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第143回</span><span class="tip-d">6月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第144回</span><span class="tip-d">11月下旬</span><span class="tip-v">北海道大学学術交流会館(札幌)</span></span></span></span></td>
           <td>第135回</td>
@@ -277,7 +468,7 @@
           <td class="deadline"><span class="dl-past">2026/5/11(月)</span></td>
           <td>会長:若狭哲(北大心臓血管外科)</td>
         </tr>
-        <tr class="row-jp row-past">
+        <tr class="row-jp row-past" data-start="2026-07-02">
           <td class="month">7/2(木) – 3(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://js-phlebology.jp/?page_id=22" target="_blank" rel="noopener">日本静脈学会 総会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本静脈学会 総会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第46回</span><span class="tip-d">7/2(木) – 3(金)</span><span class="tip-v">コラッセふくしま(福島)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第47回</span><span class="tip-d">7/1(木) – 2(金)</span><span class="tip-v">アクロス福岡(福岡)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第48回</span><span class="tip-d">6/1(木) – 2(金)</span><span class="tip-v">賢島宝生苑(三重)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第49回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第50回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第46回</td>
@@ -285,7 +476,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:小川智弘(福島第一病院 院長)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2026-07-16">
           <td class="month">7/16(木) – 17(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.jacas.org/convention/" target="_blank" rel="noopener">日本冠動脈外科学会 (JACAS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本冠動脈外科学会 (JACAS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第30回</span><span class="tip-d">7/16(木) – 17(金)</span><span class="tip-v">アクリエひめじ(姫路)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第31回</span><span class="tip-d">7/8(木) – 9(金)</span><span class="tip-v">サンポートホール高松(高松)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第32回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第33回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第34回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第30回</td>
@@ -293,7 +484,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:岡田健次(神戸大心臓血管外科)</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-08-28">
           <td class="month">8/28(金) – 31(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.escardio.org/events/congresses/" target="_blank" rel="noopener">ESC Congress</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESC Congress｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">8/28(金) – 31(月)</span><span class="tip-v">Messe München, Munich, Germany</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">8/27(金) – 30(月)</span><span class="tip-v">Milan, Italy</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>2026</td>
@@ -301,7 +492,7 @@
           <td class="deadline"><span class="dl-past">2026/3/1(日)</span></td>
           <td>European Society of Cardiology</td>
         </tr>
-        <tr class="row-reg">
+        <tr class="row-reg" data-start="2026-09-12">
           <td class="month">9/12(土) – 13(日)</td>
           <td><span class="chip chip-reg">地方</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://hopes.hkdo.jp/" target="_blank" rel="noopener">HOPES 2026 (北海道外科関連学会機構合同学術集会)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">HOPES 2026 (北海道外科関連学会機構合同学術集会)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第9回</span><span class="tip-d">9/12(土) – 13(日)</span><span class="tip-v">ホテル ライフォート札幌(札幌市中央区)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第10回</span><span class="tip-d">9月(予定)</span><span class="tip-v">札幌(例年)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第11回</span><span class="tip-d">9月(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第12回</span><span class="tip-d">9月(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第13回</span><span class="tip-d">9月(予定)</span><span class="tip-v">札幌(予定)</span></span></span></span></td>
           <td>第9回</td>
@@ -309,7 +500,7 @@
           <td class="deadline"><span class="dl-past">2026/6/30(火)</span></td>
           <td>会長5名:加藤達哉(北大呼吸器外科)・北田正博(旭川医大)・若狭哲(北大心臓血管外科)・宮城久之(旭川医大)・高橋將人(北大乳腺外科)</td>
         </tr>
-        <tr class="row-reg">
+        <tr class="row-reg" data-start="2026-09-12">
           <td class="month">9/12(土) – 13(日)</td>
           <td><span class="chip chip-reg">地方</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.ringe.jp/about/chapter" target="_blank" rel="noopener">日本臨床外科学会 北海道支部総会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本臨床外科学会 北海道支部総会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第129回</span><span class="tip-d">6/13(土)</span><span class="tip-v">アートホテル旭川(旭川)</span></span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第130回</span><span class="tip-d">9/12(土) – 13(日)</span><span class="tip-v">ホテルライフォート札幌(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第131回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第132回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第133回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第134回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第135回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第136回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第137回</span><span class="tip-d">春(予定)</span><span class="tip-v">札幌(予定)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第138回</span><span class="tip-d">秋(予定)</span><span class="tip-v">札幌(予定)</span></span></span></span></td>
           <td>第130回</td>
@@ -317,7 +508,7 @@
           <td class="deadline"><span class="dl-past">2026/6/30(火)</span></td>
           <td>会長:高橋將人(北大乳腺外科) / HOPES2026と同会期・同会場</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-10-06">
           <td class="month">10/6(火) – 9(金)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://esvs.org/events/annual-meeting/" target="_blank" rel="noopener">ESVS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESVS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/6(火) – 9(金)</span><span class="tip-v">Sava Centar, Belgrade, Serbia</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">9/28(火) – 10/1(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">9/19(火) – 22(金)</span><span class="tip-v">Luxexpo The Box, Luxembourg</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/2(火) – 5(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span></span></span></td>
           <td>2026</td>
@@ -325,7 +516,7 @@
           <td class="deadline"><span class="dl-past">2026/4/8(水)</span></td>
           <td>European Society for Vascular Surgery</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-10-07">
           <td class="month">10/7(水) – 10(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.eacts.org/" target="_blank" rel="noopener">EACTS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">EACTS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">40th</span><span class="tip-d">10/7(水) – 10(土)</span><span class="tip-v">Barcelona International Convention Centre (CCIB), Spain</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">41st</span><span class="tip-d">10月(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">42nd</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">43rd</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">44th</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>40th</td>
@@ -333,7 +524,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>European Association for Cardio-Thoracic Surgery</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2026-10-15">
           <td class="month">10/15(木) – 16(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://j-ca.org/wp/meetings/meetings-2/" target="_blank" rel="noopener">日本脈管学会 (JCA)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本脈管学会 (JCA)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第67回</span><span class="tip-d">10/15(木) – 16(金)</span><span class="tip-v">神戸ポートピアホテル(神戸)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第68回</span><span class="tip-d">10/21(木) – 22(金)</span><span class="tip-v">パシフィコ横浜ノース(横浜)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第69回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第70回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第71回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第67回</td>
@@ -341,7 +532,7 @@
           <td class="deadline"><span class="dl-past">2026/6/17(水)</span></td>
           <td>会長:村上卓道(神戸大)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2026-10-20">
           <td class="month">10/20(火) – 22(木)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.jpats.org/seminar/regular.html" target="_blank" rel="noopener">日本胸部外科学会 (JATS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本胸部外科学会 (JATS)｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第79回</span><span class="tip-d">10/20(火) – 22(木)</span><span class="tip-v">国立京都国際会館(京都)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第80回</span><span class="tip-d">11/3(水) – 5(金)</span><span class="tip-v">グランドプリンスホテル新高輪 国際館パミール(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第81回</span><span class="tip-d">11/9(木) – 11(土)</span><span class="tip-v">福岡市</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第82回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第83回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第79回</td>
@@ -349,7 +540,7 @@
           <td class="deadline"><span class="dl-past">2026/5/12(火)</span></td>
           <td>心臓会長:小野稔(東大)/テーマ「Over the Horizon」</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-10-31">
           <td class="month">10/31(土) – 11/3(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.tctconference.com/" target="_blank" rel="noopener">TCT</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">TCT｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/31(土) – 11/3(火)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">10/18(月) – 21(木)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">6/21(水) – 23(金)</span><span class="tip-v">Javits Convention Center, New York, NY, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/6(土) – 9(火)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">9/13(金) – 16(月)</span><span class="tip-v">Walter E. Washington Convention Center, Washington DC, USA</span></span></span></span></td>
           <td>2026</td>
@@ -357,7 +548,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Transcatheter Cardiovascular Therapeutics</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-11-04">
           <td class="month">11/4(水) – 7(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://stsa.org/meeting/" target="_blank" rel="noopener">STSA Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STSA Annual Meeting｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">73rd</span><span class="tip-d">11/4(水) – 7(土)</span><span class="tip-v">Disney's Yacht Club Resort, Lake Buena Vista (Orlando), FL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">74th</span><span class="tip-d">11/11(木) – 14(日)</span><span class="tip-v">Hyatt Regency Lost Pines Resort &amp; Spa, Cedar Creek, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">75th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">76th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">77th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>73rd</td>
@@ -365,7 +556,7 @@
           <td class="deadline"><span class="dl-past">2026/4/13(月)</span></td>
           <td>Southern Thoracic Surgical Association</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2026-11-13">
           <td class="month">11/13(金) – 14(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.kwcs.jp/sts-ascvts2026/" target="_blank" rel="noopener">STS–ASCVTS Aortic Summit</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STS–ASCVTS Aortic Summit｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">11/13(金) – 14(土)</span><span class="tip-v">Hamamatsucho Convention Hall, Tokyo, Japan</span></span></span></span></td>
           <td>2026</td>
@@ -381,7 +572,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年通り(年2回開催)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2026-11-26">
           <td class="month">11/26(木) – 28(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.ringe.jp/meeting/" target="_blank" rel="noopener">日本臨床外科学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本臨床外科学会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第88回</span><span class="tip-d">11/26(木) – 28(土)</span><span class="tip-v">シーガイアコンベンションセンター(宮崎)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第89回</span><span class="tip-d">11/11(木) – 13(土)</span><span class="tip-v">京王プラザホテル(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第90回</span><span class="tip-d">11/10(金) – 12(日)</span><span class="tip-v">大阪府立国際会議場(大阪)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第91回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第92回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第88回</td>
@@ -389,32 +580,34 @@
           <td class="deadline"><span class="dl-past">2026/6/15(月)</span></td>
           <td>会長:七島篤志(宮崎大肝胆膵外科)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2026-11-27">
           <td class="month">11/27(金) – 28(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="http://www.npojca.jp/meeting/" target="_blank" rel="noopener">日本冠疾患学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本冠疾患学会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第39回</span><span class="tip-d">11/27(金) – 28(土)</span><span class="tip-v">グランデはがくれ(佐賀)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第40回</span><span class="tip-d">11/26(金) – 27(土)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第41回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第42回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第43回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第39回</td>
           <td class="venue">グランデはがくれ(佐賀)</td>
-          <td class="deadline"><span class="dl-open">2026/7/22(水)</span></td>
+          <td class="deadline"><span class="dl-open" data-dl="2026-07-22">2026/7/22(水)</span></td>
           <td>会長:野出孝一(佐賀大学長)・蒲原啓司(佐賀大心外)</td>
         </tr>
       </tbody>
     </table>
+    </div>
   </section>
 
   <section class="year" id="y2027">
-    <h2>2027</h2>
+    <h2>2027<span class="ycount">26件</span></h2>
+    <div class="table-scroll">
     <table>
       <thead><tr><th>日程</th><th>学会</th><th>回次</th><th>開催地</th><th>演題締切</th><th>備考</th></tr></thead>
       <tbody>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-01-28">
           <td class="month">1/28(木) – 31(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.sts.org/education/future-annual-meetings" target="_blank" rel="noopener">STS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">62nd</span><span class="tip-d">1/29(木) – 2/1(日)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">63rd</span><span class="tip-d">1/28(木) – 31(日)</span><span class="tip-v">San Diego, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">64th</span><span class="tip-d">1/28(金) – 30(日)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">65th</span><span class="tip-d">1/26(金) – 28(日)</span><span class="tip-v">Phoenix, AZ, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">66th</span><span class="tip-d">1月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>63rd</td>
           <td class="venue">San Diego, CA, USA</td>
-          <td class="deadline"><span class="dl-open">2026/8/31(月)</span></td>
+          <td class="deadline"><span class="dl-open" data-dl="2026-08-31">2026/8/31(月)</span></td>
           <td>Society of Thoracic Surgeons</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-03-04">
           <td class="month">3/4(木) – 6(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jscvs.or.jp/meeting/" target="_blank" rel="noopener">日本心臓血管外科学会 (JSCVS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本心臓血管外科学会 (JSCVS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第56回</span><span class="tip-d">2/21(土) – 23(月)</span><span class="tip-v">幕張メッセ(千葉)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第57回</span><span class="tip-d">3/4(木) – 6(土)</span><span class="tip-v">富山</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第58回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第59回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第60回</span><span class="tip-d">2月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第57回</td>
@@ -422,15 +615,15 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:芳村直樹(富山大)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-03-26">
           <td class="month">3/26(金) – 28(日)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.j-circ.or.jp/annual/" target="_blank" rel="noopener">日本循環器学会 (JCS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本循環器学会 (JCS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第90回</span><span class="tip-d">3/20(金) – 22(日)</span><span class="tip-v">福岡国際会議場・福岡サンパレス・マリンメッセ福岡</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第91回</span><span class="tip-d">3/26(金) – 28(日)</span><span class="tip-v">パシフィコ横浜(横浜)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第92回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第93回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第94回</span><span class="tip-d">3月下旬</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第91回</td>
           <td class="venue">パシフィコ横浜(横浜)</td>
-          <td class="deadline"><span class="dl-open">2026/9/16(水)</span></td>
+          <td class="deadline"><span class="dl-open" data-dl="2026-09-16">2026/9/16(水)</span></td>
           <td>会長:伊苅裕二(東海大循環器内科)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-04-08">
           <td class="month">4/8(木) – 10(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jp.jssoc.or.jp/modules/meeting/index.php?content_id=3" target="_blank" rel="noopener">日本外科学会 (JSS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本外科学会 (JSS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第126回</span><span class="tip-d">4/23(木) – 25(土)</span><span class="tip-v">京王プラザホテル札幌 他(札幌)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第127回</span><span class="tip-d">4/8(木) – 10(土)</span><span class="tip-v">東京国際フォーラム 他(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第128回</span><span class="tip-d">4/13(木) – 15(土)</span><span class="tip-v">国立京都国際会館 他(京都)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第129回</span><span class="tip-d">4/12(木) – 14(土)</span><span class="tip-v">大阪国際会議場 他(大阪)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第130回</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第127回</td>
@@ -438,7 +631,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会頭:池田徳彦(東京医大呼吸器・甲状腺外科)</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-04-10">
           <td class="month">4/10(土) – 12(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://accscientificsession.acc.org/Information-Pages/future-meetings" target="_blank" rel="noopener">ACC Scientific Session</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ACC Scientific Session｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">ACC.26</span><span class="tip-d">3/28(土) – 30(月)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">ACC.27</span><span class="tip-d">4/10(土) – 12(月)</span><span class="tip-v">Houston, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">ACC.28</span><span class="tip-d">4/1(土) – 3(月)</span><span class="tip-v">Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">ACC.29</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">ACC.30</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>ACC.27</td>
@@ -454,7 +647,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年春開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-05-01">
           <td class="month">5/1(土) – 4(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.aats.org/future-annual-meetings" target="_blank" rel="noopener">AATS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">AATS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">106th</span><span class="tip-d">5/2(土) – 5(火)</span><span class="tip-v">McCormick Place Lakeside Center, Chicago, IL, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">107th</span><span class="tip-d">5/1(土) – 4(火)</span><span class="tip-v">Los Angeles Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">108th</span><span class="tip-d">4/29(土) – 5/2(火)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">109th</span><span class="tip-d">5/5(土) – 8(火)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">110th</span><span class="tip-d">4/27(土) – 30(火)</span><span class="tip-v">Toronto Convention Centre, Toronto, ON, Canada</span></span></span></span></td>
           <td>107th</td>
@@ -462,7 +655,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American Association for Thoracic Surgery</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-05-19">
           <td class="month">5/19(水) – 22(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://ascvts.org/annual-meeting.html" target="_blank" rel="noopener">ASCVTS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ASCVTS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">34th</span><span class="tip-d">4/16(木) – 19(日)</span><span class="tip-v">Antalya, Turkey</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">35th</span><span class="tip-d">5/19(水) – 22(土)</span><span class="tip-v">横浜 / Yokohama, Japan</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">36th</span><span class="tip-d">春(予定)</span><span class="tip-v">Bangkok, Thailand</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">37th</span><span class="tip-d">春(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">38th</span><span class="tip-d">春(予定)</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>35th</td>
@@ -470,7 +663,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>President: 小野稔 (東大)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-05-26">
           <td class="month">5/26(水) – 28(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jsvs.org/ja/event/" target="_blank" rel="noopener">日本血管外科学会 (JSVS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本血管外科学会 (JSVS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第54回</span><span class="tip-d">5/27(水) – 29(金)</span><span class="tip-v">グランフロント大阪 北館 ナレッジキャピタル(大阪)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第55回</span><span class="tip-d">5/26(水) – 28(金)</span><span class="tip-v">ホテルオークラ東京</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第56回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第57回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第58回</span><span class="tip-d">5月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第55回</td>
@@ -478,7 +671,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:大木隆生(東京慈恵会医大)</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-06-02">
           <td class="month">6/2(水) – 5(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://vascular.org/vascular-specialists/education-and-meetings/meetings/future-vam-dates" target="_blank" rel="noopener">SVS Vascular Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">SVS Vascular Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">VAM 2026</span><span class="tip-d">6/10(水) – 13(土)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">VAM 2027</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">VAM 2028</span><span class="tip-d">5/31(水) – 6/3(土)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">VAM 2029</span><span class="tip-d">6/13(水) – 16(土)</span><span class="tip-v">Kentucky International Convention Center, Louisville, KY, USA</span></span></span></span></td>
           <td>VAM 2027</td>
@@ -486,7 +679,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Society for Vascular Surgery</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-06-02">
           <td class="month">6/2(水) – 5(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://asaio.org/Conference/Archive/" target="_blank" rel="noopener">ASAIO Annual Conference</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ASAIO Annual Conference｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">72nd</span><span class="tip-d">6/17(水) – 20(土)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">73rd</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">The Royal Sonesta, Houston, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">74th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">75th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">76th</span><span class="tip-d">6月(予定)</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>73rd</td>
@@ -502,7 +695,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年通り(年2回開催)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-07-01">
           <td class="month">7/1(木) – 2(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://js-phlebology.jp/?page_id=22" target="_blank" rel="noopener">日本静脈学会 総会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本静脈学会 総会｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第46回</span><span class="tip-d">7/2(木) – 3(金)</span><span class="tip-v">コラッセふくしま(福島)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第47回</span><span class="tip-d">7/1(木) – 2(金)</span><span class="tip-v">アクロス福岡(福岡)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第48回</span><span class="tip-d">6/1(木) – 2(金)</span><span class="tip-v">賢島宝生苑(三重)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第49回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第50回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第47回</td>
@@ -510,7 +703,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:廣松伸一(久留米大学医療センター 副院長)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-07-08">
           <td class="month">7/8(木) – 9(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.jacas.org/convention/" target="_blank" rel="noopener">日本冠動脈外科学会 (JACAS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本冠動脈外科学会 (JACAS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第30回</span><span class="tip-d">7/16(木) – 17(金)</span><span class="tip-v">アクリエひめじ(姫路)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第31回</span><span class="tip-d">7/8(木) – 9(金)</span><span class="tip-v">サンポートホール高松(高松)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第32回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第33回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第34回</span><span class="tip-d">7月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第31回</td>
@@ -518,7 +711,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:堀井泰浩(香川大心臓血管外科)</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-08-27">
           <td class="month">8/27(金) – 30(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.escardio.org/events/congresses/" target="_blank" rel="noopener">ESC Congress</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESC Congress｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">8/28(金) – 31(月)</span><span class="tip-v">Messe München, Munich, Germany</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">8/27(金) – 30(月)</span><span class="tip-v">Milan, Italy</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">8月末 – 9月初</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>2027</td>
@@ -534,7 +727,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年9月中下旬開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-09-28">
           <td class="month">9/28(火) – 10/1(金)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://esvs.org/events/annual-meeting/" target="_blank" rel="noopener">ESVS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESVS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/6(火) – 9(金)</span><span class="tip-v">Sava Centar, Belgrade, Serbia</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">9/28(火) – 10/1(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">9/19(火) – 22(金)</span><span class="tip-v">Luxexpo The Box, Luxembourg</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/2(火) – 5(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span></span></span></td>
           <td>2027</td>
@@ -558,7 +751,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年秋開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-10-18">
           <td class="month">10/18(月) – 21(木)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.tctconference.com/" target="_blank" rel="noopener">TCT</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">TCT｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/31(土) – 11/3(火)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">10/18(月) – 21(木)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">6/21(水) – 23(金)</span><span class="tip-v">Javits Convention Center, New York, NY, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/6(土) – 9(火)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">9/13(金) – 16(月)</span><span class="tip-v">Walter E. Washington Convention Center, Washington DC, USA</span></span></span></span></td>
           <td>2027</td>
@@ -566,7 +759,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Transcatheter Cardiovascular Therapeutics</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-10-21">
           <td class="month">10/21(木) – 22(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://j-ca.org/wp/meetings/meetings-2/" target="_blank" rel="noopener">日本脈管学会 (JCA)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本脈管学会 (JCA)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第67回</span><span class="tip-d">10/15(木) – 16(金)</span><span class="tip-v">神戸ポートピアホテル(神戸)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第68回</span><span class="tip-d">10/21(木) – 22(金)</span><span class="tip-v">パシフィコ横浜ノース(横浜)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第69回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第70回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第71回</span><span class="tip-d">10月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第68回</td>
@@ -574,7 +767,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>会長:出口順夫(埼玉医大総合医療センター)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-11-03">
           <td class="month">11/3(水) – 5(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.jpats.org/seminar/regular.html" target="_blank" rel="noopener">日本胸部外科学会 (JATS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本胸部外科学会 (JATS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第79回</span><span class="tip-d">10/20(火) – 22(木)</span><span class="tip-v">国立京都国際会館(京都)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第80回</span><span class="tip-d">11/3(水) – 5(金)</span><span class="tip-v">グランドプリンスホテル新高輪 国際館パミール(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第81回</span><span class="tip-d">11/9(木) – 11(土)</span><span class="tip-v">福岡市</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第82回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第83回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第80回</td>
@@ -582,7 +775,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>心臓会長:新浪博士(東京女子医大)</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2027-11-11">
           <td class="month">11/11(木) – 14(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://stsa.org/meeting/" target="_blank" rel="noopener">STSA Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STSA Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">73rd</span><span class="tip-d">11/4(水) – 7(土)</span><span class="tip-v">Disney's Yacht Club Resort, Lake Buena Vista (Orlando), FL, USA</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">74th</span><span class="tip-d">11/11(木) – 14(日)</span><span class="tip-v">Hyatt Regency Lost Pines Resort &amp; Spa, Cedar Creek, TX, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">75th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">76th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">77th</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>74th</td>
@@ -590,7 +783,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Southern Thoracic Surgical Association</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-11-11">
           <td class="month">11/11(木) – 13(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.ringe.jp/meeting/" target="_blank" rel="noopener">日本臨床外科学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本臨床外科学会｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第88回</span><span class="tip-d">11/26(木) – 28(土)</span><span class="tip-v">シーガイアコンベンションセンター(宮崎)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第89回</span><span class="tip-d">11/11(木) – 13(土)</span><span class="tip-v">京王プラザホテル(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第90回</span><span class="tip-d">11/10(金) – 12(日)</span><span class="tip-v">大阪府立国際会議場(大阪)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第91回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第92回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第89回</td>
@@ -606,7 +799,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年通り</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2027-11-26">
           <td class="month">11/26(金) – 27(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="http://www.npojca.jp/meeting/" target="_blank" rel="noopener">日本冠疾患学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本冠疾患学会｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第39回</span><span class="tip-d">11/27(金) – 28(土)</span><span class="tip-v">グランデはがくれ(佐賀)</span></span><span class="tip-row cur"><span class="tip-y">2027</span><span class="tip-e">第40回</span><span class="tip-d">11/26(金) – 27(土)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第41回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第42回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第43回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第40回</td>
@@ -616,14 +809,16 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </section>
 
   <section class="year" id="y2028">
-    <h2>2028</h2>
+    <h2>2028<span class="ycount">26件</span></h2>
+    <div class="table-scroll">
     <table>
       <thead><tr><th>日程</th><th>学会</th><th>回次</th><th>開催地</th><th>演題締切</th><th>備考</th></tr></thead>
       <tbody>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-01-28">
           <td class="month">1/28(金) – 30(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.sts.org/education/future-annual-meetings" target="_blank" rel="noopener">STS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">62nd</span><span class="tip-d">1/29(木) – 2/1(日)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">63rd</span><span class="tip-d">1/28(木) – 31(日)</span><span class="tip-v">San Diego, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">64th</span><span class="tip-d">1/28(金) – 30(日)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">65th</span><span class="tip-d">1/26(金) – 28(日)</span><span class="tip-v">Phoenix, AZ, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">66th</span><span class="tip-d">1月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>64th</td>
@@ -647,7 +842,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-04-01">
           <td class="month">4/1(土) – 3(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://accscientificsession.acc.org/Information-Pages/future-meetings" target="_blank" rel="noopener">ACC Scientific Session</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ACC Scientific Session｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">ACC.26</span><span class="tip-d">3/28(土) – 30(月)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">ACC.27</span><span class="tip-d">4/10(土) – 12(月)</span><span class="tip-v">Houston, TX, USA</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">ACC.28</span><span class="tip-d">4/1(土) – 3(月)</span><span class="tip-v">Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">ACC.29</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">ACC.30</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>ACC.28</td>
@@ -655,7 +850,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American College of Cardiology</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2028-04-13">
           <td class="month">4/13(木) – 15(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jp.jssoc.or.jp/modules/meeting/index.php?content_id=3" target="_blank" rel="noopener">日本外科学会 (JSS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本外科学会 (JSS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第126回</span><span class="tip-d">4/23(木) – 25(土)</span><span class="tip-v">京王プラザホテル札幌 他(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第127回</span><span class="tip-d">4/8(木) – 10(土)</span><span class="tip-v">東京国際フォーラム 他(東京)</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">第128回</span><span class="tip-d">4/13(木) – 15(土)</span><span class="tip-v">国立京都国際会館 他(京都)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第129回</span><span class="tip-d">4/12(木) – 14(土)</span><span class="tip-v">大阪国際会議場 他(大阪)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第130回</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第128回</td>
@@ -679,7 +874,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年春開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-04-29">
           <td class="month">4/29(土) – 5/2(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.aats.org/future-annual-meetings" target="_blank" rel="noopener">AATS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">AATS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">106th</span><span class="tip-d">5/2(土) – 5(火)</span><span class="tip-v">McCormick Place Lakeside Center, Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">107th</span><span class="tip-d">5/1(土) – 4(火)</span><span class="tip-v">Los Angeles Convention Center, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">108th</span><span class="tip-d">4/29(土) – 5/2(火)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">109th</span><span class="tip-d">5/5(土) – 8(火)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">110th</span><span class="tip-d">4/27(土) – 30(火)</span><span class="tip-v">Toronto Convention Centre, Toronto, ON, Canada</span></span></span></span></td>
           <td>108th</td>
@@ -695,7 +890,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-05-31">
           <td class="month">5/31(水) – 6/3(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://vascular.org/vascular-specialists/education-and-meetings/meetings/future-vam-dates" target="_blank" rel="noopener">SVS Vascular Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">SVS Vascular Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">VAM 2026</span><span class="tip-d">6/10(水) – 13(土)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">VAM 2027</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">VAM 2028</span><span class="tip-d">5/31(水) – 6/3(土)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">VAM 2029</span><span class="tip-d">6/13(水) – 16(土)</span><span class="tip-v">Kentucky International Convention Center, Louisville, KY, USA</span></span></span></span></td>
           <td>VAM 2028</td>
@@ -703,7 +898,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>Society for Vascular Surgery</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2028-06-01">
           <td class="month">6/1(木) – 2(金)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://js-phlebology.jp/?page_id=22" target="_blank" rel="noopener">日本静脈学会 総会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本静脈学会 総会｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第46回</span><span class="tip-d">7/2(木) – 3(金)</span><span class="tip-v">コラッセふくしま(福島)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第47回</span><span class="tip-d">7/1(木) – 2(金)</span><span class="tip-v">アクロス福岡(福岡)</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">第48回</span><span class="tip-d">6/1(木) – 2(金)</span><span class="tip-v">賢島宝生苑(三重)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第49回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第50回</span><span class="tip-d">6月 – 7月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第48回</td>
@@ -719,7 +914,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>American Society for Artificial Internal Organs</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-06-21">
           <td class="month">6/21(水) – 23(金)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.tctconference.com/" target="_blank" rel="noopener">TCT</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">TCT｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/31(土) – 11/3(火)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">10/18(月) – 21(木)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">6/21(水) – 23(金)</span><span class="tip-v">Javits Convention Center, New York, NY, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/6(土) – 9(火)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">9/13(金) – 16(月)</span><span class="tip-v">Walter E. Washington Convention Center, Washington DC, USA</span></span></span></span></td>
           <td>2028</td>
@@ -759,7 +954,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年9月開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2028-09-19">
           <td class="month">9/19(火) – 22(金)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://esvs.org/events/annual-meeting/" target="_blank" rel="noopener">ESVS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESVS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/6(火) – 9(金)</span><span class="tip-v">Sava Centar, Belgrade, Serbia</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">9/28(火) – 10/1(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">9/19(火) – 22(金)</span><span class="tip-v">Luxexpo The Box, Luxembourg</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/2(火) – 5(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span></span></span></td>
           <td>2028</td>
@@ -791,7 +986,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年秋開催</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2028-11-09">
           <td class="month">11/9(木) – 11(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.jpats.org/seminar/regular.html" target="_blank" rel="noopener">日本胸部外科学会 (JATS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本胸部外科学会 (JATS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第79回</span><span class="tip-d">10/20(火) – 22(木)</span><span class="tip-v">国立京都国際会館(京都)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第80回</span><span class="tip-d">11/3(水) – 5(金)</span><span class="tip-v">グランドプリンスホテル新高輪 国際館パミール(東京)</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">第81回</span><span class="tip-d">11/9(木) – 11(土)</span><span class="tip-v">福岡市</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第82回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第83回</span><span class="tip-d">10月下旬 – 11月上旬</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第81回</td>
@@ -799,7 +994,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>心臓会長:塩瀬明(九大)/呼吸器会長:鈴木弘行(福島県立医大)</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2028-11-10">
           <td class="month">11/10(金) – 12(日)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.ringe.jp/meeting/" target="_blank" rel="noopener">日本臨床外科学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本臨床外科学会｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第88回</span><span class="tip-d">11/26(木) – 28(土)</span><span class="tip-v">シーガイアコンベンションセンター(宮崎)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第89回</span><span class="tip-d">11/11(木) – 13(土)</span><span class="tip-v">京王プラザホテル(東京)</span></span><span class="tip-row cur"><span class="tip-y">2028</span><span class="tip-e">第90回</span><span class="tip-d">11/10(金) – 12(日)</span><span class="tip-v">大阪府立国際会議場(大阪)</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第91回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第92回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第90回</td>
@@ -833,14 +1028,16 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </section>
 
   <section class="year" id="y2029">
-    <h2>2029</h2>
+    <h2>2029<span class="ycount">26件</span></h2>
+    <div class="table-scroll">
     <table>
       <thead><tr><th>日程</th><th>学会</th><th>回次</th><th>開催地</th><th>演題締切</th><th>備考</th></tr></thead>
       <tbody>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2029-01-26">
           <td class="month">1/26(金) – 28(日)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.sts.org/education/future-annual-meetings" target="_blank" rel="noopener">STS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">STS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">62nd</span><span class="tip-d">1/29(木) – 2/1(日)</span><span class="tip-v">Ernest N. Morial Convention Center, New Orleans, LA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">63rd</span><span class="tip-d">1/28(木) – 31(日)</span><span class="tip-v">San Diego, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">64th</span><span class="tip-d">1/28(金) – 30(日)</span><span class="tip-v">Fort Lauderdale, FL, USA</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">65th</span><span class="tip-d">1/26(金) – 28(日)</span><span class="tip-v">Phoenix, AZ, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">66th</span><span class="tip-d">1月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>65th</td>
@@ -864,7 +1061,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="row-jp">
+        <tr class="row-jp" data-start="2029-04-12">
           <td class="month">4/12(木) – 14(土)</td>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://jp.jssoc.or.jp/modules/meeting/index.php?content_id=3" target="_blank" rel="noopener">日本外科学会 (JSS)</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本外科学会 (JSS)｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">第126回</span><span class="tip-d">4/23(木) – 25(土)</span><span class="tip-v">京王プラザホテル札幌 他(札幌)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第127回</span><span class="tip-d">4/8(木) – 10(土)</span><span class="tip-v">東京国際フォーラム 他(東京)</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第128回</span><span class="tip-d">4/13(木) – 15(土)</span><span class="tip-v">国立京都国際会館 他(京都)</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">第129回</span><span class="tip-d">4/12(木) – 14(土)</span><span class="tip-v">大阪国際会議場 他(大阪)</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第130回</span><span class="tip-d">4月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第129回</td>
@@ -896,7 +1093,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年春開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2029-05-05">
           <td class="month">5/5(土) – 8(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.aats.org/future-annual-meetings" target="_blank" rel="noopener">AATS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">AATS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">106th</span><span class="tip-d">5/2(土) – 5(火)</span><span class="tip-v">McCormick Place Lakeside Center, Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">107th</span><span class="tip-d">5/1(土) – 4(火)</span><span class="tip-v">Los Angeles Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">108th</span><span class="tip-d">4/29(土) – 5/2(火)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">109th</span><span class="tip-d">5/5(土) – 8(火)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">110th</span><span class="tip-d">4/27(土) – 30(火)</span><span class="tip-v">Toronto Convention Centre, Toronto, ON, Canada</span></span></span></span></td>
           <td>109th</td>
@@ -912,7 +1109,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2029-06-13">
           <td class="month">6/13(水) – 16(土)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://vascular.org/vascular-specialists/education-and-meetings/meetings/future-vam-dates" target="_blank" rel="noopener">SVS Vascular Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">SVS Vascular Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">VAM 2026</span><span class="tip-d">6/10(水) – 13(土)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">VAM 2027</span><span class="tip-d">6/2(水) – 5(土)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">VAM 2028</span><span class="tip-d">5/31(水) – 6/3(土)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">VAM 2029</span><span class="tip-d">6/13(水) – 16(土)</span><span class="tip-v">Kentucky International Convention Center, Louisville, KY, USA</span></span></span></span></td>
           <td>VAM 2029</td>
@@ -968,7 +1165,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年9月開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2029-10-02">
           <td class="month">10/2(火) – 5(金)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://esvs.org/events/annual-meeting/" target="_blank" rel="noopener">ESVS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">ESVS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/6(火) – 9(金)</span><span class="tip-v">Sava Centar, Belgrade, Serbia</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">9/28(火) – 10/1(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">9/19(火) – 22(金)</span><span class="tip-v">Luxexpo The Box, Luxembourg</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/2(火) – 5(金)</span><span class="tip-v">CCL Lisbon Congress Centre, Portugal</span></span></span></span></td>
           <td>2029</td>
@@ -976,7 +1173,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>European Society for Vascular Surgery</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2029-10-06">
           <td class="month">10/6(土) – 9(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.tctconference.com/" target="_blank" rel="noopener">TCT</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">TCT｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/31(土) – 11/3(火)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">10/18(月) – 21(木)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">6/21(水) – 23(金)</span><span class="tip-v">Javits Convention Center, New York, NY, USA</span></span><span class="tip-row cur"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/6(土) – 9(火)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">9/13(金) – 16(月)</span><span class="tip-v">Walter E. Washington Convention Center, Washington DC, USA</span></span></span></span></td>
           <td>2029</td>
@@ -1050,10 +1247,12 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </section>
 
   <section class="year" id="y2030">
-    <h2>2030</h2>
+    <h2>2030<span class="ycount">24件</span></h2>
+    <div class="table-scroll">
     <table>
       <thead><tr><th>日程</th><th>学会</th><th>回次</th><th>開催地</th><th>演題締切</th><th>備考</th></tr></thead>
       <tbody>
@@ -1113,7 +1312,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>例年春開催</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2030-04-27">
           <td class="month">4/27(土) – 30(火)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.aats.org/future-annual-meetings" target="_blank" rel="noopener">AATS Annual Meeting</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">AATS Annual Meeting｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">106th</span><span class="tip-d">5/2(土) – 5(火)</span><span class="tip-v">McCormick Place Lakeside Center, Chicago, IL, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">107th</span><span class="tip-d">5/1(土) – 4(火)</span><span class="tip-v">Los Angeles Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">108th</span><span class="tip-d">4/29(土) – 5/2(火)</span><span class="tip-v">Hynes Convention Center, Boston, MA, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">109th</span><span class="tip-d">5/5(土) – 8(火)</span><span class="tip-v">Gaylord National Resort, National Harbor, MD, USA</span></span><span class="tip-row cur"><span class="tip-y">2030</span><span class="tip-e">110th</span><span class="tip-d">4/27(土) – 30(火)</span><span class="tip-v">Toronto Convention Centre, Toronto, ON, Canada</span></span></span></span></td>
           <td>110th</td>
@@ -1169,7 +1368,7 @@
           <td class="deadline"><span class="dl-none">—</span></td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="row-int">
+        <tr class="row-int" data-start="2030-09-13">
           <td class="month">9/13(金) – 16(月)</td>
           <td><span class="chip chip-int">INT</span><span class="soc-wrap"><a class="soc-name soc-link" href="https://www.tctconference.com/" target="_blank" rel="noopener">TCT</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">TCT｜開催予定 2026–2030</span><span class="tip-row"><span class="tip-y">2026</span><span class="tip-e">2026</span><span class="tip-d">10/31(土) – 11/3(火)</span><span class="tip-v">San Diego Convention Center, CA, USA</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">2027</span><span class="tip-d">10/18(月) – 21(木)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">2028</span><span class="tip-d">6/21(水) – 23(金)</span><span class="tip-v">Javits Convention Center, New York, NY, USA</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">2029</span><span class="tip-d">10/6(土) – 9(火)</span><span class="tip-v">Moscone Center, San Francisco, CA, USA</span></span><span class="tip-row cur"><span class="tip-y">2030</span><span class="tip-e">2030</span><span class="tip-d">9/13(金) – 16(月)</span><span class="tip-v">Walter E. Washington Convention Center, Washington DC, USA</span></span></span></span></td>
           <td>2030</td>
@@ -1251,9 +1450,10 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </section>
 
-  <section class="year">
+  <section class="year" id="refs">
     <h2>参考 / References</h2>
     <ul>
       <li><a href="https://jsvs.org/ja/event/" target="_blank">日本血管外科学会 学術総会一覧</a></li>
@@ -1286,13 +1486,18 @@
 </main>
 
 <footer>
-  <p>Compiled: 2026-07-08 / 予定は変更される可能性があります。最新情報は各学会公式サイトでご確認ください。</p>
+  <div class="foot-grad"></div>
+  <p>Compiled: 2026-07-10 / 予定は変更される可能性があります。最新情報は各学会公式サイトでご確認ください。</p>
 </footer>
+<button type="button" id="toTop" title="トップへ戻る" aria-label="トップへ戻る">↑</button>
 <script>
 (function () {
+  var d = document, root = d.documentElement;
+
+  /* ---- 区分フィルタ (JP/INT/地方の表示切替) ---- */
   var active = { jp: true, int: true, reg: true };
-  var rows = [].slice.call(document.querySelectorAll('tr.row-jp, tr.row-int, tr.row-reg'));
-  var sections = [].slice.call(document.querySelectorAll('section.year'));
+  var rows = [].slice.call(d.querySelectorAll('tr.row-jp, tr.row-int, tr.row-reg'));
+  var sections = [].slice.call(d.querySelectorAll('section.year'));
   function catOf(tr) {
     return tr.classList.contains('row-jp') ? 'jp'
          : tr.classList.contains('row-int') ? 'int' : 'reg';
@@ -1310,25 +1515,133 @@
       var anyVisible = [].some.call(dataRows, function (tr) { return tr.style.display !== 'none'; });
       sec.style.display = anyVisible ? '' : 'none';
     });
-    [].forEach.call(document.querySelectorAll('.filter-btn[data-cat]'), function (b) {
+    [].forEach.call(d.querySelectorAll('.filter-btn[data-cat]'), function (b) {
       b.classList.toggle('active', active[b.getAttribute('data-cat')]);
     });
-    var cnt = document.getElementById('filterCount');
+    var cnt = d.getElementById('filterCount');
     if (cnt) cnt.textContent = '表示中: ' + shown + ' 件';
   }
-  [].forEach.call(document.querySelectorAll('.filter-btn[data-cat]'), function (b) {
+  [].forEach.call(d.querySelectorAll('.filter-btn[data-cat]'), function (b) {
     b.addEventListener('click', function () {
       var c = b.getAttribute('data-cat');
       active[c] = !active[c];
       apply();
     });
   });
-  var reset = document.querySelector('[data-cat="all"]');
+  var reset = d.querySelector('[data-cat="all"]');
   if (reset) reset.addEventListener('click', function () {
     active.jp = active.int = active.reg = true;
     apply();
   });
   apply();
+
+  /* ---- 日付ユーティリティ ---- */
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  function daysUntil(iso) {
+    var t = new Date(iso + 'T00:00:00');
+    return Math.round((t - today) / 864e5);
+  }
+
+  /* ---- 演題締切カウントダウンバッジ ---- */
+  [].forEach.call(d.querySelectorAll('.dl-open[data-dl]'), function (el) {
+    var n = daysUntil(el.getAttribute('data-dl'));
+    if (isNaN(n) || n < 0) return;
+    var b = d.createElement('span');
+    b.className = 'dl-badge' + (n <= 7 ? ' hot' : '');
+    b.textContent = n === 0 ? '本日締切' : 'あと' + n + '日';
+    el.appendChild(b);
+  });
+
+  /* ---- 直近の学会カード (D-day 順に最大4件) ---- */
+  var wrap = d.getElementById('nextup');
+  var wrapOuter = d.getElementById('nextupWrap');
+  if (wrap) {
+    var items = [];
+    [].forEach.call(d.querySelectorAll('tr[data-start]'), function (tr) {
+      var n = daysUntil(tr.getAttribute('data-start'));
+      if (isNaN(n) || n < 0) return;
+      items.push({ n: n, tr: tr });
+    });
+    items.sort(function (a, b) { return a.n - b.n; });
+    items.slice(0, 4).forEach(function (it) {
+      var tr = it.tr, c = tr.cells;
+      var m = tr.className.match(/row-(jp|int|reg)/);
+      var cat = m ? m[1] : 'jp';
+      var nameEl = tr.querySelector('.soc-name');
+      var card = d.createElement('button');
+      card.type = 'button';
+      card.className = 'nu-card nu-' + cat;
+      var days = d.createElement('span'); days.className = 'nu-days';
+      days.textContent = it.n === 0 ? '本日開催' : 'D-' + it.n;
+      var nm = d.createElement('span'); nm.className = 'nu-name';
+      nm.textContent = nameEl ? nameEl.textContent : c[1].textContent;
+      var meta = d.createElement('span'); meta.className = 'nu-meta';
+      meta.textContent = c[0].textContent.trim() + ' ・ ' + c[3].textContent.trim();
+      card.appendChild(days); card.appendChild(nm); card.appendChild(meta);
+      card.addEventListener('click', function () {
+        tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        tr.classList.remove('flash'); void tr.offsetWidth; tr.classList.add('flash');
+      });
+      wrap.appendChild(card);
+    });
+    if (!wrap.children.length && wrapOuter) wrapOuter.style.display = 'none';
+  }
+
+  /* ---- 年度ナビのスクロールスパイ ---- */
+  var links = [].slice.call(d.querySelectorAll('.topnav a[href^="#"]'));
+  var linkMap = {};
+  links.forEach(function (a) { linkMap[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window && links.length) {
+    var spy = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove('active'); });
+        var a = linkMap[e.target.id];
+        if (a) a.classList.add('active');
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    sections.forEach(function (s) { if (s.id) spy.observe(s); });
+  }
+
+  /* ---- スクロール連動フェードイン ---- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    var targets = [].slice.call(d.querySelectorAll('section.year, .nextup-wrap'));
+    targets.forEach(function (t) { t.classList.add('reveal'); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (t) { io.observe(t); });
+  }
+
+  /* ---- テーマ切替 (localStorage 永続化) ---- */
+  var tbtn = d.getElementById('themeToggle');
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    try { localStorage.setItem('amTheme', t); } catch (e) {}
+    if (tbtn) tbtn.textContent = t === 'dark' ? '☀' : '☾';
+  }
+  if (tbtn) {
+    tbtn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀' : '☾';
+    tbtn.addEventListener('click', function () {
+      setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  /* ---- トップへ戻る ---- */
+  var toTop = d.getElementById('toTop');
+  if (toTop) {
+    window.addEventListener('scroll', function () {
+      toTop.classList.toggle('show', window.scrollY > 600);
+    }, { passive: true });
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();
 </script>
 </body>
