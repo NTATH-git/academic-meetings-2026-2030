@@ -323,15 +323,16 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
     tbody tr.row-reg { border-left: 4px solid var(--reg); }
     tr.row-jp td:first-child, tr.row-int td:first-child, tr.row-reg td:first-child { border-left: 0; }
     tbody td {
-      display: grid; grid-template-columns: 4.8rem minmax(0, 1fr); gap: .5rem;
-      padding: .44rem .65rem; border-bottom: 1px solid var(--line);
+      display: block; position: relative; min-height: 2.35rem;
+      padding: .44rem .65rem .44rem 5.8rem; border-bottom: 1px solid var(--line);
       overflow-wrap: anywhere;
     }
     tbody td:last-child { border-bottom: 0; }
     tbody td:empty { display: none; }
     tbody td::before {
+      position: absolute; left: .65rem; top: .56rem; width: 4.5rem;
       color: var(--faint); font-size: .68rem; font-weight: 800;
-      letter-spacing: .08em; padding-top: .12rem;
+      letter-spacing: .08em;
     }
     tbody td:nth-child(1)::before { content: "日程"; }
     tbody td:nth-child(2)::before { content: "学会"; }
@@ -350,7 +351,8 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
   @media (max-width: 420px) {
     .filter-btn, .filter-reset { font-size: .76rem; }
     .filter-btn .chip { margin-right: 2px; padding: 2px 7px; font-size: .68rem; }
-    tbody td { grid-template-columns: 4.25rem minmax(0, 1fr); padding-inline: .55rem; }
+    tbody td { padding-left: 5.15rem; padding-right: .55rem; }
+    tbody td::before { left: .55rem; width: 4rem; }
   }
   footer { text-align: center; color: var(--faint); font-size: .83rem; padding: 2.2rem 1rem 4.5rem; }
   .foot-grad { width: 64px; height: 3px; border-radius: 2px; background: var(--grad); margin: 0 auto .9rem; opacity: .8; }
