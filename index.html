@@ -267,7 +267,91 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
   /* References */
   section.year ul { margin: .2rem 0 0; padding-left: 1.1rem; columns: 2; column-gap: 2.6rem; }
   section.year li { margin: .18rem 0; break-inside: avoid; }
-  @media (max-width: 700px) { section.year ul { columns: 1; } }
+  /* ===== スマートフォン表示 ===== */
+  @media (max-width: 700px) {
+    body { overflow-x: hidden; }
+    header { padding: 2.2rem 1rem 2.5rem; }
+    .hero-kicker { font-size: .58rem; letter-spacing: .2em; padding: .28rem .7rem; }
+    header h1 { font-size: 1.55rem; }
+    header p { font-size: .78rem; letter-spacing: .03em; }
+    .hero-stats { gap: 1.15rem; margin-top: 1rem; }
+    .hero-stats .stat { min-width: 62px; }
+    .hero-stats b { font-size: 1.2rem; }
+    .hero-stats .lab { font-size: .6rem; }
+
+    .topnav { gap: .2rem; padding: .42rem .6rem; }
+    .topnav a { font-size: .78rem; padding: .4rem .68rem; }
+    .theme-toggle { width: 2.25rem; height: 2.25rem; }
+
+    .nextup-wrap { margin-top: 1rem; padding: 0 .8rem; }
+    .nextup-title { margin-left: .1rem; letter-spacing: .22em; }
+    .nextup {
+      grid-template-columns: none; grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 86vw); overflow-x: auto;
+      scroll-snap-type: x mandatory; scroll-padding-left: .1rem;
+      padding: .1rem .1rem .55rem; scrollbar-width: none;
+    }
+    .nextup::-webkit-scrollbar { display: none; }
+    .nu-card { min-height: 128px; scroll-snap-align: start; }
+
+    main { padding: .75rem .7rem 2rem; }
+    .filterbar {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .55rem; margin: .9rem .1rem 1.1rem;
+    }
+    .filter-label, .filter-count { grid-column: 1 / -1; }
+    .filter-btn, .filter-reset {
+      width: 100%; min-height: 44px; justify-content: center;
+      padding: .45rem .5rem;
+    }
+    .filter-count { margin-left: 0; text-align: right; }
+
+    section.year { padding: .9rem .7rem 1rem; margin-bottom: 1rem; border-radius: 14px; }
+    section.year h2 { margin-bottom: .8rem; font-size: 1.35rem; }
+    section.year h2::before { width: 8px; height: 22px; }
+    .table-scroll { overflow: visible; }
+    table { display: block; min-width: 0; font-size: .88rem; }
+    thead { display: none; }
+    tbody { display: grid; gap: .7rem; }
+    tbody tr {
+      display: block; overflow: hidden;
+      background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: 0 5px 16px rgba(2,6,23,.12);
+    }
+    tbody tr.row-jp  { border-left: 4px solid var(--jp); }
+    tbody tr.row-int { border-left: 4px solid var(--int); }
+    tbody tr.row-reg { border-left: 4px solid var(--reg); }
+    tr.row-jp td:first-child, tr.row-int td:first-child, tr.row-reg td:first-child { border-left: 0; }
+    tbody td {
+      display: grid; grid-template-columns: 4.8rem minmax(0, 1fr); gap: .5rem;
+      padding: .44rem .65rem; border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+    }
+    tbody td:last-child { border-bottom: 0; }
+    tbody td:empty { display: none; }
+    tbody td::before {
+      color: var(--faint); font-size: .68rem; font-weight: 800;
+      letter-spacing: .08em; padding-top: .12rem;
+    }
+    tbody td:nth-child(1)::before { content: "日程"; }
+    tbody td:nth-child(2)::before { content: "学会"; }
+    tbody td:nth-child(3)::before { content: "回次"; }
+    tbody td:nth-child(4)::before { content: "開催地"; }
+    tbody td:nth-child(5)::before { content: "演題締切"; }
+    tbody td:nth-child(6)::before { content: "備考"; }
+    .month, .deadline { white-space: normal; }
+    .soc-wrap { min-width: 0; border-bottom: 0; }
+    .soc-tip { display: none !important; }
+    tr.row-past { opacity: .58; }
+    section.year ul { columns: 1; }
+    footer { padding: 1.6rem .9rem 4rem; font-size: .76rem; }
+    #toTop { right: .75rem; bottom: .75rem; }
+  }
+  @media (max-width: 420px) {
+    .filter-btn, .filter-reset { font-size: .76rem; }
+    .filter-btn .chip { margin-right: 2px; padding: 2px 7px; font-size: .68rem; }
+    tbody td { grid-template-columns: 4.25rem minmax(0, 1fr); padding-inline: .55rem; }
+  }
   footer { text-align: center; color: var(--faint); font-size: .83rem; padding: 2.2rem 1rem 4.5rem; }
   .foot-grad { width: 64px; height: 3px; border-radius: 2px; background: var(--grad); margin: 0 auto .9rem; opacity: .8; }
   a { color: var(--acc1); text-decoration: none; }
@@ -587,7 +671,7 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
           <td><span class="chip chip-jp">JP</span><span class="soc-wrap"><a class="soc-name soc-link" href="http://www.npojca.jp/meeting/" target="_blank" rel="noopener">日本冠疾患学会</a><span class="soc-tip" role="tooltip"><span class="soc-tip-h">日本冠疾患学会｜開催予定 2026–2030</span><span class="tip-row cur"><span class="tip-y">2026</span><span class="tip-e">第39回</span><span class="tip-d">11/27(金) – 28(土)</span><span class="tip-v">グランデはがくれ(佐賀)</span></span><span class="tip-row"><span class="tip-y">2027</span><span class="tip-e">第40回</span><span class="tip-d">11/26(金) – 27(土)</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2028</span><span class="tip-e">第41回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2029</span><span class="tip-e">第42回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span><span class="tip-row"><span class="tip-y">2030</span><span class="tip-e">第43回</span><span class="tip-d">11月</span><span class="tip-v tbd">未定</span></span></span></span></td>
           <td>第39回</td>
           <td class="venue">グランデはがくれ(佐賀)</td>
-          <td class="deadline"><span class="dl-open" data-dl="2026-07-22">2026/7/22(水)</span></td>
+          <td class="deadline"><span class="dl-past">2026/7/22(水)</span></td>
           <td>会長:野出孝一(佐賀大学長)・蒲原啓司(佐賀大心外)</td>
         </tr>
       </tbody>
@@ -1489,7 +1573,7 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
 
 <footer>
   <div class="foot-grad"></div>
-  <p>Compiled: 2026-07-20 / 予定は変更される可能性があります。最新情報は各学会公式サイトでご確認ください。</p>
+  <p>Compiled: 2026-07-26 / 予定は変更される可能性があります。最新情報は各学会公式サイトでご確認ください。</p>
 </footer>
 <button type="button" id="toTop" title="トップへ戻る" aria-label="トップへ戻る">↑</button>
 <script>
