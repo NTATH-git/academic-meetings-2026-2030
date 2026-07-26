@@ -193,7 +193,7 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
   .chip-jp  { background: linear-gradient(135deg, #2563eb, #3b82f6); }
   .chip-int { background: linear-gradient(135deg, #e11d48, #f43f5e); }
   .chip-reg { background: linear-gradient(135deg, #059669, #10b981); }
-  /* 区分フィルタ(クリックで表示/非表示) */
+  /* 区分フィルタ（選択した区分だけを表示） */
   .filterbar { display: flex; gap: .5rem; align-items: center; margin: 1.1rem 0; flex-wrap: wrap; font-size: .85rem; }
   .filter-label { color: var(--muted); font-weight: 700; letter-spacing: .05em; }
   .filter-btn {
@@ -204,13 +204,15 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
   }
   .filter-btn:hover { transform: translateY(-1px); }
   .filter-btn.active { border-color: transparent; box-shadow: inset 0 0 0 1.5px var(--acc1), 0 4px 14px rgba(56,189,248,.15); }
-  .filter-btn:not(.active) { opacity: .42; filter: grayscale(.6); text-decoration: line-through; }
+  .filter-btn:not(.active) { opacity: .62; filter: grayscale(.45); }
   .filter-reset {
     cursor: pointer; font-family: inherit; font-size: .82rem; font-weight: 700; color: #fff;
     background: var(--grad); border: none; border-radius: 999px; padding: .38rem .95rem;
     box-shadow: 0 4px 14px rgba(99,102,241,.3); transition: transform .18s, box-shadow .18s;
   }
   .filter-reset:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,.45); }
+  .filter-reset:not(.active) { opacity: .68; filter: saturate(.65); }
+  .filter-reset.active { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--acc1), 0 4px 14px rgba(99,102,241,.3); }
   .filter-count { color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
   .month { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .venue { color: var(--text); opacity: .92; }
@@ -359,10 +361,10 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
 <main>
   <div class="filterbar">
     <span class="filter-label">表示する区分:</span>
-    <button type="button" class="filter-btn active" data-cat="jp"><span class="chip chip-jp">JP</span>国内学会</button>
-    <button type="button" class="filter-btn active" data-cat="int"><span class="chip chip-int">INT</span>国際学会</button>
-    <button type="button" class="filter-btn active" data-cat="reg"><span class="chip chip-reg">地方</span>地方会・支部会</button>
-    <button type="button" class="filter-reset" data-cat="all">すべて表示</button>
+    <button type="button" class="filter-btn" data-cat="jp" aria-pressed="false"><span class="chip chip-jp">JP</span>国内学会</button>
+    <button type="button" class="filter-btn" data-cat="int" aria-pressed="false"><span class="chip chip-int">INT</span>国際学会</button>
+    <button type="button" class="filter-btn" data-cat="reg" aria-pressed="false"><span class="chip chip-reg">地方</span>地方会・支部会</button>
+    <button type="button" class="filter-reset active" data-cat="all" aria-pressed="true">すべて表示</button>
     <span class="filter-count" id="filterCount"></span>
   </div>
 
@@ -1494,8 +1496,8 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
 (function () {
   var d = document, root = d.documentElement;
 
-  /* ---- 区分フィルタ (JP/INT/地方の表示切替) ---- */
-  var active = { jp: true, int: true, reg: true };
+  /* ---- 区分フィルタ（選択した区分だけを表示） ---- */
+  var selectedCat = 'all';
   var rows = [].slice.call(d.querySelectorAll('tr.row-jp, tr.row-int, tr.row-reg'));
   var sections = [].slice.call(d.querySelectorAll('section.year'));
   function catOf(tr) {
@@ -1505,7 +1507,7 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
   function apply() {
     var shown = 0;
     rows.forEach(function (tr) {
-      var on = active[catOf(tr)];
+      var on = selectedCat === 'all' || selectedCat === catOf(tr);
       tr.style.display = on ? '' : 'none';
       if (on) shown++;
     });
@@ -1516,21 +1518,28 @@ document.documentElement.setAttribute('data-theme',t);})();</script>
       sec.style.display = anyVisible ? '' : 'none';
     });
     [].forEach.call(d.querySelectorAll('.filter-btn[data-cat]'), function (b) {
-      b.classList.toggle('active', active[b.getAttribute('data-cat')]);
+      var isSelected = selectedCat === b.getAttribute('data-cat');
+      b.classList.toggle('active', isSelected);
+      b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
     });
+    var allButton = d.querySelector('[data-cat="all"]');
+    if (allButton) {
+      var allSelected = selectedCat === 'all';
+      allButton.classList.toggle('active', allSelected);
+      allButton.setAttribute('aria-pressed', allSelected ? 'true' : 'false');
+    }
     var cnt = d.getElementById('filterCount');
     if (cnt) cnt.textContent = '表示中: ' + shown + ' 件';
   }
   [].forEach.call(d.querySelectorAll('.filter-btn[data-cat]'), function (b) {
     b.addEventListener('click', function () {
-      var c = b.getAttribute('data-cat');
-      active[c] = !active[c];
+      selectedCat = b.getAttribute('data-cat');
       apply();
     });
   });
   var reset = d.querySelector('[data-cat="all"]');
   if (reset) reset.addEventListener('click', function () {
-    active.jp = active.int = active.reg = true;
+    selectedCat = 'all';
     apply();
   });
   apply();
